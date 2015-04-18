@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Powder Monkey</title>
 	<script src="libs/d3/d3.min.js" charset="utf-8"></script>
+	<script src="js/graph.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
@@ -51,8 +52,8 @@
 		};
 	
 		function initVis() {
-			var svg = d3.select("#content")
-				.insert("svg","#svg")
+			var svg = d3.select("#svg")
+				.append("svg")
 				.attr("width", width + margin.left + margin.right)
 				.attr("height", height + margin.top + margin.bottom);
 			bigdata.indicators.forEach(function(d){
@@ -66,14 +67,15 @@
 					.html(d.mnemonic);	
 			});
 			d3.select("#addGraph").on("click", function() {
-				addGraph();
+				addGraph(svg);
 			});			
 		};
 
-		function addGraph() {
+		function addGraph(svg) {
 			var x_prop = d3.select("#x_prop").node().value;
 			var y_prop = d3.select("#y_prop").node().value;
-			console.log("success");
+			var len = graphs.length;
+			graphs[len] = new Graph(bigdata, x_prop, y_prop, svg, width);
 		};
 
 		loadData();
