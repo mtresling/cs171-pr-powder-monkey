@@ -1,4 +1,63 @@
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+html {
+	height: 100%;
+	width: 100%;
+}
+
 body {
+	height: 100%;
+	width: 100%;
 	font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size: 14px;
+}
+
+svg {
+	background-color: lightgray;
+}
+
+#header {
+	height: 60px;
+	min-width: 100%;
+	line-height: 60px;
+	padding-left: 10px;
+	border-bottom: 1px solid black;
+}
+
+#body {
+	min-height: calc(100% - 80px);
+	margin-right: 250px;
+	border-right: 1px solid black;
+	padding: 0 2px 0 0;
+	min-width: 700px;
+}
+
+#side {
+	float: right;
+	width: 190px;
+	margin: 0 -203px 0 0;
+	padding: 5px;
+}
+
+#content {
+	text-align: center;
+	width: 100%;
+	float: left;
+	padding: 5px;
+}
+
+#clear {
+	clear: both;
+}
+
+#footer {
+	height: 20px;
+	min-width: 100%;
+	line-height: 20px;
+	border-top: 1px double black;
+	padding-left: 10px;
 }

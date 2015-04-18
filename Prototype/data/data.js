@@ -6,176 +6,175 @@ var file = fs.createWriteStream('data.json');
 
 var bigdata = {
 	"countries": [],
-	"country_x": {}
+	"country_x": {},
+	"indicators": [
+		{
+			mnemonic: "population",
+			source: "worldbank.org",
+			source_id: "SP.POP.TOTL" 
+		},
+		{
+			mnemonic: "health_expenditure",
+			source: "worldbank.org",
+			source_id: "SH.XPD.TOTL.CD"
+		},
+		{
+			mnemonic: "gdp",
+			source: "worldbank.org",
+			source_id: "NY.GDP.MKTP.CD"
+		},
+		{
+			mnemonic: "gross_savings",
+			source: "worldbank.org",
+			source_id: "NY.GNS.ICTR.ZS"
+		},
+		{
+			mnemonic: "inflation",
+			source: "worldbank.org",
+			source_id: "FP.CPI.TOTL.ZG"
+		},
+		{
+			mnemonic: "trade_per_gdp",
+			source: "worldbank.org",
+			source_id: "NE.TRD.GNFS.ZS"
+		},
+		{
+			mnemonic: "foreign_direct_investment",
+			source: "worldbank.org",
+			source_id: "BX.KLT.DINV.WD.GD.ZS"
+		},
+		{
+			mnemonic: "age_dependency_ratio",
+			source: "worldbank.org",
+			source_id: "SP.POP.DPND"
+		},
+		{
+			mnemonic: "birth_rate",
+			source: "worldbank.org",
+			source_id: "SP.DYN.CBRT.IN"
+		},
+		{
+			mnemonic: "death_rate",
+			source: "worldbank.org",
+			source_id: "SP.DYN.CDRT.IN"
+		},
+		{
+			mnemonic: "fertility_rate",
+			source: "worldbank.org",
+			source_id: "SP.DYN.TFRT.IN"
+		},
+		{
+			mnemonic: "net_migration",
+			source: "worldbank.org",
+			source_id: "SM.POP.NETM"
+		},
+		{
+			mnemonic: "urban_population",
+			source: "worldbank.org",
+			source_id: "SP.URB.TOTL.IN.ZS"
+		},
+		{
+			mnemonic: "public_spending_on_education",
+			source: "worldbank.org",
+			source_id: "SE.XPD.TOTL.GD.ZS"
+		},
+		{
+			mnemonic: "literacy_rate",
+			source: "worldbank.org",
+			source_id: "SE.ADT.LITR.ZS"
+		},
+		{
+			mnemonic: "primary_completion_rate",
+			source: "worldbank.org",
+			source_id: "SE.PRM.CMPT.ZS"
+		},
+		{
+			mnemonic: "labor_force_participation_rate",
+			source: "worldbank.org",
+			source_id: "SL.TLF.ACTI.FE.ZS"
+		},
+		{
+			mnemonic: "unemployment",
+			source: "worldbank.org",
+			source_id: "SL.UEM.TOTL.ZS"
+		},
+		{
+			mnemonic: "gni_per_capita",
+			source: "worldbank.org",
+			source_id: "NY.GNP.PCAP.CD"
+		},
+		{
+			mnemonic: "gini_index",
+			source: "worldbank.org",
+			source_id: "SI.POV.GINI"
+		},
+		{
+			mnemonic: "poverty_headcount_ratio",
+			source: "worldbank.org",
+			source_id: "SI.POV.NAHC"
+		},
+		{
+			mnemonic: "improved_water_source",
+			source: "worldbank.org",
+			source_id: "SH.H2O.SAFE.ZS"
+		},
+		{
+			mnemonic: "improved_sanitation_facilities",
+			source: "worldbank.org",
+			source_id: "SH.STA.ACSN"
+		},
+		{
+			mnemonic: "health_expenditure_per_gdp",
+			source: "worldbank.org",
+			source_id: "SH.XPD.TOTL.ZS"
+		},
+		{
+			mnemonic: "health_expenditure_per_capita",
+			source: "worldbank.org",
+			source_id: "SH.XPD.PCAP"
+		},
+		{
+			mnemonic: "health_expenditure_public",
+			source: "worldbank.org",
+			source_id: "SH.XPD.PUBL"
+		},
+		//{
+		//	mnemonic: "health_expenditure_private",
+		//	source: "worldbank.org",
+		//	source_id: "SH.XPD.PRIV"
+		//},
+		{
+			mnemonic: "out_of_pocket_health_exp",
+			source: "worldbank.org",
+			source_id: "SH.XPD.OOPC.TO.ZS"
+		},
+		{
+			mnemonic: "physician_density",
+			source: "worldbank.org",
+			source_id: "SH.MED.PHYS.ZS"
+		},
+		{
+			mnemonic: "hospital_bed_density",
+			source: "worldbank.org",
+			source_id: "SH.MED.BEDS.ZS"
+		},
+		{
+			mnemonic: "tb_treatment_success_rate",
+			source: "worldbank.org",
+			source_id: "SH.TBS.CURE.ZS"
+		},
+		{
+			mnemonic: "immunization_dpt",
+			source: "worldbank.org",
+			source_id: "SH.IMM.IDPT"
+		},
+		{
+			mnemonic: "births_att_by_skilled_health_staff",
+			source: "worldbank.org",
+			source_id: "SH.STA.BRTC.ZS"
+		}
+	]
 };
-
-var indicators = [
-	{
-		mnemonic: "population",
-		source: "worldbank.org",
-		source_id: "SP.POP.TOTL" 
-	},
-	{
-		mnemonic: "health_expenditure",
-		source: "worldbank.org",
-		source_id: "SH.XPD.TOTL.CD"
-	},
-	{
-		mnemonic: "gdp",
-		source: "worldbank.org",
-		source_id: "NY.GDP.MKTP.CD"
-	},
-	{
-		mnemonic: "gross_savings",
-		source: "worldbank.org",
-		source_id: "NY.GNS.ICTR.ZS"
-	},
-	{
-		mnemonic: "inflation",
-		source: "worldbank.org",
-		source_id: "FP.CPI.TOTL.ZG"
-	},
-	{
-		mnemonic: "trade_per_gdp",
-		source: "worldbank.org",
-		source_id: "NE.TRD.GNFS.ZS"
-	},
-	{
-		mnemonic: "foreign_direct_investment",
-		source: "worldbank.org",
-		source_id: "BX.KLT.DINV.WD.GD.ZS"
-	},
-	{
-		mnemonic: "age_dependency_ratio",
-		source: "worldbank.org",
-		source_id: "SP.POP.DPND"
-	},
-	{
-		mnemonic: "birth_rate",
-		source: "worldbank.org",
-		source_id: "SP.DYN.CBRT.IN"
-	},
-	{
-		mnemonic: "death_rate",
-		source: "worldbank.org",
-		source_id: "SP.DYN.CDRT.IN"
-	},
-	{
-		mnemonic: "fertility_rate",
-		source: "worldbank.org",
-		source_id: "SP.DYN.TFRT.IN"
-	},
-	{
-		mnemonic: "net_migration",
-		source: "worldbank.org",
-		source_id: "SM.POP.NETM"
-	},
-	{
-		mnemonic: "urban_population",
-		source: "worldbank.org",
-		source_id: "SP.URB.TOTL.IN.ZS"
-	},
-	{
-		mnemonic: "public_spending_on_education",
-		source: "worldbank.org",
-		source_id: "SE.XPD.TOTL.GD.ZS"
-	},
-	{
-		mnemonic: "literacy_rate",
-		source: "worldbank.org",
-		source_id: "SE.ADT.LITR.ZS"
-	},
-	{
-		mnemonic: "primary_completion_rate",
-		source: "worldbank.org",
-		source_id: "SE.PRM.CMPT.ZS"
-	},
-	{
-		mnemonic: "labor_force_participation_rate",
-		source: "worldbank.org",
-		source_id: "SL.TLF.ACTI.FE.ZS"
-	},
-	{
-		mnemonic: "unemployment",
-		source: "worldbank.org",
-		source_id: "SL.UEM.TOTL.ZS"
-	},
-	{
-		mnemonic: "gni_per_capita",
-		source: "worldbank.org",
-		source_id: "NY.GNP.PCAP.CD"
-	},
-	{
-		mnemonic: "gini_index",
-		source: "worldbank.org",
-		source_id: "SI.POV.GINI"
-	},
-	{
-		mnemonic: "poverty_headcount_ratio",
-		source: "worldbank.org",
-		source_id: "SI.POV.NAHC"
-	},
-	{
-		mnemonic: "improved_water_source",
-		source: "worldbank.org",
-		source_id: "SH.H2O.SAFE.ZS"
-	},
-	{
-		mnemonic: "improved_sanitation_facilities",
-		source: "worldbank.org",
-		source_id: "SH.STA.ACSN"
-	},
-	{
-		mnemonic: "health_expenditure_per_gdp",
-		source: "worldbank.org",
-		source_id: "SH.XPD.TOTL.ZS"
-	},
-	{
-		mnemonic: "health_expenditure_per_capita",
-		source: "worldbank.org",
-		source_id: "SH.XPD.PCAP"
-	},
-	{
-		mnemonic: "health_expenditure_public",
-		source: "worldbank.org",
-		source_id: "SH.XPD.PUBL"
-	},
-	//{
-	//	mnemonic: "health_expenditure_private",
-	//	source: "worldbank.org",
-	//	source_id: "SH.XPD.PRIV"
-	//},
-	{
-		mnemonic: "out_of_pocket_health_exp",
-		source: "worldbank.org",
-		source_id: "SH.XPD.OOPC.TO.ZS"
-	},
-	{
-		mnemonic: "physician_density",
-		source: "worldbank.org",
-		source_id: "SH.MED.PHYS.ZS"
-	},
-	{
-		mnemonic: "hospital_bed_density",
-		source: "worldbank.org",
-		source_id: "SH.MED.BEDS.ZS"
-	},
-	{
-		mnemonic: "tb_treatment_success_rate",
-		source: "worldbank.org",
-		source_id: "SH.TBS.CURE.ZS"
-	},
-	{
-		mnemonic: "immunization_dpt",
-		source: "worldbank.org",
-		source_id: "SH.IMM.IDPT"
-	},
-	{
-		mnemonic: "births_att_by_skilled_health_staff",
-		source: "worldbank.org",
-		source_id: "SH.STA.BRTC.ZS"
-	}
-];
 
 function get_countries(page) {
 	var url = "http://api.worldbank.org/countries?format=json&page=" + page;
@@ -207,7 +206,7 @@ function get_countries(page) {
   					return 0;
 				});
 		    	bigdata.countries.forEach(function(d,i){
-		    		indicators.forEach(function(dd){
+		    		bigdata.indicators.forEach(function(dd){
 		    			bigdata.countries[i][dd.mnemonic] = [];
 		    		});	
 		    		bigdata.country_x[d.mnemonic] = i;	
@@ -222,8 +221,8 @@ function get_countries(page) {
 };
 
 function get_country_indicators(i) {
-	if(indicators[i]) {
-		get_world_bank_indicators(indicators[i]["mnemonic"], indicators[i]["source_id"], i, 1);	
+	if(bigdata.indicators[i]) {
+		get_world_bank_indicators(bigdata.indicators[i]["mnemonic"], bigdata.indicators[i]["source_id"], i, 1);	
 	} else {
 		var stringified = JSON.stringify(bigdata, null, '\t');
 		file.write(stringified);

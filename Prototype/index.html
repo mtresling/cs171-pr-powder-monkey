@@ -7,8 +7,76 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<h1>Powder Monkey</h1>
+	<div id="header">	
+		<h1>Powder Monkey</h1>
+	</div> <!--header-->
+	<div id="body">
+		<div id="side">
+			<strong>Horizontal Axis</strong><br>
+			<select id="x_prop">
+				<option value="country">Country</option>
+				<option value="year">Year</option>
+			</select>
+			<br><br>	
+			<strong>Vertical Axis</strong><br>
+			<select id="y_prop">
+				<option value="country">Country</option>
+				<option value="year">Year</option>
+			</select>
+			<br><br>
+			<button id="addGraph">Add Graph</button>	
+		</div> <!--side-->
+		<div id="content">
+			<div id="svg"></div>
+			<span id="slider">	
+				<input id="slider_input" type="range" name="points" step="1">
+			</span>
+		</div> <!--content-->
+		<div id="clear"></div>
+	</div> <!--body-->
+	<div id="footer">
+	</div> <!--footer-->	
 	<script>
+		var margin = {top: 10, right: 10, bottom: 10, left: 10};
+		var width = 900 - margin.left - margin.right;
+		var height = 600 - margin.top - margin.bottom;
+		var bigdata;
+		var graphs = [];
+
+		function loadData() {
+			d3.json("data/data.json", function(error, data) {
+				bigdata = data;
+				initVis();		
+			});
+		};
+	
+		function initVis() {
+			var svg = d3.select("#content")
+				.insert("svg","#svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom);
+			bigdata.indicators.forEach(function(d){
+				d3.select("#x_prop")
+					.append("option")
+					.attr("value", d.mnemonic)
+					.html(d.mnemonic);
+				d3.select("#y_prop")
+					.append("option")
+					.attr("value", d.mnemonic)
+					.html(d.mnemonic);	
+			});
+			d3.select("#addGraph").on("click", function() {
+				addGraph();
+			});			
+		};
+
+		function addGraph() {
+			var x_prop = d3.select("#x_prop").node().value;
+			var y_prop = d3.select("#y_prop").node().value;
+			console.log("success");
+		};
+
+		loadData();
 	</script>
 </body>
 </html>
