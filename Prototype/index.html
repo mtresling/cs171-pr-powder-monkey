@@ -16,7 +16,6 @@
 			<strong>Horizontal Axis</strong><br>
 			<select id="x_prop">
 				<option value="country">Country</option>
-				<option value="year">Year</option>
 			</select>
 			<br><br>	
 			<strong>Vertical Axis</strong><br>
@@ -40,7 +39,7 @@
 	<script>
 		var margin = {top: 10, right: 10, bottom: 10, left: 10};
 		var width = 900 - margin.left - margin.right;
-		var height = 600 - margin.top - margin.bottom;
+		var height = 3300 - margin.top - margin.bottom;
 		var bigdata;
 		var graphs = [];
 
@@ -55,12 +54,14 @@
 			var svg = d3.select("#svg")
 				.append("svg")
 				.attr("width", width + margin.left + margin.right)
-				.attr("height", height + margin.top + margin.bottom);
+				.attr("height", height + margin.top + margin.bottom)
+				.append("g")
+        		.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 			bigdata.indicators.forEach(function(d){
-				d3.select("#x_prop")
-					.append("option")
-					.attr("value", d.mnemonic)
-					.html(d.mnemonic);
+				//d3.select("#x_prop")
+				//	.append("option")
+				//	.attr("value", d.mnemonic)
+				//	.html(d.mnemonic);
 				d3.select("#y_prop")
 					.append("option")
 					.attr("value", d.mnemonic)
