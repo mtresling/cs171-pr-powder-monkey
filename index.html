@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>PowderMonkey</title>
+	<script src="d3/d3.min.js" charset="utf-8"></script>
+	<script src = "js/monkeybar.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+<script>
+
+	//GLOBAL VARIABLES
+	
+	//data
+	var meta, 
+		cache,
+		nest,
+		query,
+		select,
+		att,
+		att_m,
+		config;
+
+	var pos;
+
+	
+	//layout
+	var margin = {top: 10, right: 10, bottom: 10, left: 10},
+		width = 0,
+    	height = 500 - margin.top - margin.bottom
+    	xLayout = {};
+    
+    //monkey bars	
+   	var mbWidth = 100;
+   		mbGap = 80
+   		mbId = 0
+   		dragging = {}
+   		typeBound = 0;	
+
+   	dataLoad();	
+
+	function dataLoad(){
+
+		meta = [
+			{mnemonic: "REG", name: "REGION", 		type: "C"},
+			{mnemonic: "SUB", name: "SUBREGION", 	type: "C"},
+			{mnemonic: "LAN", name: "LANGUAGE", 	type: "C"},
+			{mnemonic: "SCO", name: "SCORE", 		type: "Q"},
+			{mnemonic: "HCA", name: "HEALTHCARE", 	type: "Q"},
+			{mnemonic: "LIF", name: "LIFE EXP", 	type: "Q"},
+			{mnemonic: "INF", name: "INF MORT", 	type: "Q"},
+			{mnemonic: "ENV", name: "GENERAL ENV", 	type: "Q"},
+			{mnemonic: "GDP", name: "GDP",		 	type: "Q"},
+			{mnemonic: "POP", name: "POPULATION", 	type: "Q"}
+		];
+
+		meta_m = d3.map(meta, function(d){return d.mnemonic});
+
+		config = [
+			{attribute: "REG", children: [1]},
+			{attribute: "SUB", children: []},
+			{attribute: "LAN", children: []},
+			{attribute: "SCO", children: [4,7]},
+			{attribute: "HCA", children: [5,6]},
+			{attribute: "LIF", children: []},
+			{attribute: "INF", children: []},
+			{attribute: "ENV", children: [8]},
+			{attribute: "GDP", children: []},
+			{attribute: "POP", children: []}
+		];
+
+		initVis();
+
+	};//data
+
+	function initVis(){
+
+		att = config.map(function(d,i){
+			return {
+				id: mbId++,
+				attribute: d.attribute,
+				name: meta_m.get(d.attribute).name,
+				type: meta_m.get(d.attribute).type,
+				children: d.children
+			};
+		});
+
+		att_m = d3.map(att, function(d){return d.id});
+
+		pos = att.map(function(d){return d.id});
+
+		width = (pos.length * mbWidth) + ((pos.length - 1) * mbGap);
+
+		xLayout = d3.scale.ordinal()
+    		.domain(pos)
+			.rangeBands([0, width], (mbGap/(mbWidth+mbGap)), 0);
+
+		for (var i = 0; i < pos.length; i++) {
+    		typeBound = xLayout(pos[i]);
+    		if (att_m.get(i).type === "Q") { break; };
+		};
+
+		//Add SVG
+
+   		d3.select("body").append("svg")
+   			.attr("width", width + margin.left + margin.right)
+    		.attr("height", height + margin.top + margin.bottom)
+    		.attr("style", "background: lightgray")
+			.append("g")
+    		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");	
+
+    	monkeyBars_EnterEdit();	
+
+	};//initVis	
+
+	function monkeyBars_EnterEdit(){
+
+		var monkeyBars = d3.select("svg")
+			.select("g")
+			.selectAll("monkeyBar")
+			.data(att, function(d) {return d.id});
+
+		monkeyBars.enter()
+			.append("g")
+    		.attr("id", function(d){return "mB"+d.id})
+    		.attr("class", "monkeyBar")
+    		.attr("transform", function(d){return "translate(" + xLayout(d.id) + ",0)" })
+    		.each(function(d,i){
+    			var obj = att_m.get(d.id);
+    			obj.f = monkeyBar()
+    				.width(mbWidth);
+    			d3.select(this).call(obj.f);})
+    		.call(d3.behavior.drag()
+				.origin(function(d) {return {x: xLayout(d.id)}; })
+				.on("dragstart", function(d) {monkeyBar_Drag_Start(d)})
+	        	.on("drag", function(d) {monkeyBar_Drag(d)})
+	        	.on("dragend", function(d) {monkeyBar_Drag_End(d)})
+	    	);
+
+	    monkeyBars.exit().remove();
+		
+	};//monkeyBars_EnterEdit
+	
+	function monkeyBar_Drag_Start(d) {
+		comps = [];
+		curpos = [];
+		comps.push(d.id);
+		var x = att_m.get(d.id);
+		comps = companions(x);
+
+		for (var i = 0; i < comps.length; i++) {	
+    		curpos[i] = xLayout(comps[i]) - xLayout(d.id);
+    		comps[i] = "#mB" + comps[i];
+		};
+	}//monkeyBar_Drag_Start
+
+	function monkeyBar_Drag(d) {
+    	comps.forEach(function(d,i){
+    		d3.select(d).attr("transform", function(d) {return "translate(" + (d3.event.x + curpos[i]) + ")"; });
+    	});
+	}//monkeyBar_Drag	
+
+	function monkeyBar_Drag_End(d) {
+		d3.selectAll(".monkeyBar").attr("transform", function(d) { console.log(d);
+			return "translate(" + xLayout(d.id) + ")"; });
+	}//monkeyBar_Drag_End	
+
+	function position(d) {
+			var v = dragging[d];
+			return v == null ? xLayout(d) : v;
+	};
+
+	function companions(d) {
+		for(var i = 0, count = d.children.length || 0 ; i < count; i++) {
+			comps.push(d.children[i]);
+    		var x = att_m.get(d.children[i]);
+    		companions(x);
+		};
+		return comps;
+	}; 
+
+</script>
+</body>
+</html>
